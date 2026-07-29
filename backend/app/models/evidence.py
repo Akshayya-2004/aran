@@ -31,7 +31,7 @@ class Evidence(Base):
         default=False
     )
 
-    hash = Column(
+    file_hash = Column(
         String(64),
         nullable=False,
         unique=True
@@ -39,7 +39,7 @@ class Evidence(Base):
 
     generated_at = Column(
         DateTime(timezone=True),
-        nullable=False
+        nullable=True
     )
 
     # created_at = Column(

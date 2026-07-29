@@ -94,6 +94,12 @@ class Report(Base):
         index=True
     )
 
+    # updated_at = Column(
+    #     DateTime(timezone=True),
+    #     server_default=func.now(),
+    #     onupdate=func.now()
+    # )
+
     created_at = Column(
         DateTime(timezone=True),
         server_default=func.now(),
