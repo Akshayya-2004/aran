@@ -1,5 +1,15 @@
 from .user import UserBase, UserResponse
 from .auth import RegisterRequest, LoginRequest, Token, TokenData
+from .report import (
+    ReportCreate,
+    ReportResponse,
+    ReportListResponse,
+)
+from .evidence import (
+    EvidenceResponse,
+    PDFResponse,
+)
+
 
 __all__ = [
     "UserBase",
@@ -8,4 +18,9 @@ __all__ = [
     "LoginRequest",
     "Token",
     "TokenData",
+    "ReportCreate",
+    "ReportResponse",
+    "ReportListResponse",
+    "EvidenceResponse",
+    "PDFResponse",
 ]
