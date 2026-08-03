@@ -9,6 +9,7 @@ from .evidence import (
     EvidenceResponse,
     PDFResponse,
 )
+from .analysis import AnalysisResult
 
 
 __all__ = [
@@ -23,4 +24,5 @@ __all__ = [
     "ReportListResponse",
     "EvidenceResponse",
     "PDFResponse",
+    "AnalysisResult",
 ]

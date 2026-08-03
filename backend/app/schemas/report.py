@@ -47,6 +47,8 @@ class ReportResponse(BaseModel):
 
     language: str
 
+    ai_explanation: str | None
+
     status: ReportStatus
 
     created_at: datetime

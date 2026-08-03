@@ -71,6 +71,11 @@ class Report(Base):
         nullable=False
     )
 
+    ai_explanation = Column(
+        Text,
+        nullable=True
+    )
+
     severity = Column(
         SQLEnum(Severity),
         nullable=False,

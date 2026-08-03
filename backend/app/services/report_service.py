@@ -1,5 +1,6 @@
 import random
 from datetime import datetime
+from typing import Any
 
 from app.enums import ReportStatus, Severity
 from app.models import Report, User
@@ -7,7 +8,7 @@ from app.repositories import ReportRepository
 from app.schemas import ReportCreate
 from app.repositories.evidence_repository import EvidenceRepository
 from app.services.evidence_service import EvidenceService
-
+from app.schemas import AnalysisResult
 
 class ReportService:
 
@@ -28,7 +29,14 @@ class ReportService:
         self,
         report_data: ReportCreate,
         current_user: User,
+        analysis: AnalysisResult,
     ) -> Report:
+
+        # ai_service = AIService()
+
+        # analysis = ai_service.analyze(
+        #     report_data.selected_text
+        # )
 
         report = Report(
             user_id=current_user.id,
@@ -37,33 +45,19 @@ class ReportService:
             platform=report_data.platform,
             display_name=report_data.display_name,
             username=report_data.username,
-            profile_url=str(report_data.profile_url)
-            if report_data.profile_url
-            else None,
-            post_url=str(report_data.post_url)
-            if report_data.post_url
-            else None,
+            profile_url=str(report_data.profile_url) if report_data.profile_url else None,
+            post_url=str(report_data.post_url) if report_data.post_url else None,
             selected_text=report_data.selected_text,
 
-            # Temporary values until Sprint 6 (AI)
-            classification="Pending AI Analysis",
-            severity=Severity.LOW,
-            confidence=0.0,
-            language="Unknown",
-            status=ReportStatus.ANALYZING,
+            classification=analysis.classification,
+            ai_explanation=analysis.explanation,
+            severity=analysis.severity,
+            confidence=analysis.confidence,
+            language=analysis.language,
+            status=ReportStatus.ANALYZED,
         )
 
-        report = self.repository.create(report)
-
-        evidence_repository = EvidenceRepository(self.repository.db)
-
-        evidence_service = EvidenceService(
-            evidence_repository
-        )
-
-        evidence_service.generate_evidence(report)
-
-        return report
+        return self.repository.create(report)
 
     def get_my_reports(self, current_user: User):
         return self.repository.get_by_user(current_user.id)

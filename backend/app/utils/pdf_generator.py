@@ -78,28 +78,35 @@ class PDFGenerator:
 
         elements.append(
             Paragraph(
-                f"Classification: {report.classification}",
+                f"<b>Classification:</b> {report.classification}",
                 styles["BodyText"],
             )
         )
 
         elements.append(
             Paragraph(
-                f"Severity: {report.severity.value}",
+                f"<b>Severity:</b> {report.severity.value}",
                 styles["BodyText"],
             )
         )
 
         elements.append(
             Paragraph(
-                f"Confidence: {report.confidence}",
+                f"<b>Confidence:</b> {report.confidence:.2f}",
                 styles["BodyText"],
             )
         )
 
         elements.append(
             Paragraph(
-                f"Language: {report.language}",
+                f"<b>Language:</b> {report.language}",
+                styles["BodyText"],
+            )
+        )
+
+        elements.append(
+            Paragraph(
+                f"<b>Explanation:</b><br/>{report.ai_explanation}",
                 styles["BodyText"],
             )
         )

@@ -11,7 +11,15 @@ from app.schemas import (
     ReportResponse,
     ReportListResponse,
 )
-from app.services import ReportService
+from app.repositories import (
+    ReportRepository,
+    EvidenceRepository,
+)
+
+from app.services import (
+    ReportService,
+    ReportWorkflowService,
+)
 
 router = APIRouter(
     prefix="/reports",
@@ -29,11 +37,15 @@ def create_report(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    repository = ReportRepository(db)
-    service = ReportService(repository)
+    workflow = ReportWorkflowService(
+        report_repository=ReportRepository(db),
+        evidence_repository=EvidenceRepository(db),
+    )
 
-    return service.create_report(report_data, current_user)
-
+    return workflow.create_report(
+        report_data,
+        current_user,
+    )
 
 @router.get(
     "",
